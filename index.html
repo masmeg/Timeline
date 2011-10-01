@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>年表ジェネレーター Ver0.1</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="stylesheet" href="./timeline.css" type="text/css">
+    <script src="./jquery-1.6.4.min.js"></script>
+    <script src="./raphael.js"></script>
+    <script src="./timeline.js"></script>
+  </head>
+  <body>
+    <h1>年表ジェネレーター</h1>
+    <p>図で○になっている部分にマウスを合わせると、
+      何があったのか表示されます。</p>
+    <div class="timechart_main" id="tc_timechart"></div>
+    <label>開始日:<input id="tc_start" onBlur="setStart(this.value);"
+    value="1500" type="number" /></label>
+    <label>終了日:<input id="tc_end" onBlur="setEnd(this.value);"
+    value="1650" type="number" /></label>
+    <br />
+    <label>年表の幅：
+      <input id="tc_range_diff" onChange="changeRange(this.value);"
+	     value="150" type="range" min="10" max="200">
+    </label>
+    <button id="tc_prev" onClick="setPrev();">Prev</button>
+    <button id="tc_next" onClick="setNext();">Next</button>
+    <button id="tc_read" onClick="readJSON();">Read</button>
+    <br />
+    <p>下のテキストエリアを変更して、
+      Readを押すと年表の内容が変更できます。</p>
+    <textarea id="timeline_data" rows="20" cols="60">
+[
+ {
+  "title": "織田信長",
+  "t_start": 1534,
+  "t_end": 1582,
+  "periods": [
+   {"time": 1534, "label": "那古野城で生誕（勝幡城とも）。", "impact": 5},
+   {"time": 1560, "label": "桶狭間の戦いで今川義元を討つ。", "impact": 4},
+   {"time": 1568, "label": "上洛、足利義昭を第15代将軍に就任させる。", "impact": 1},
+   {"time": 1576, "label": "本拠を安土城に移転。", "impact": 3},
+   {"time": 1582, "label": "本能寺の変", "impact": 5}
+  ],
+  "color": "#ff0000",
+  "is_visible": true
+ },
+ {
+  "title": "豊臣秀吉",
+  "t_start": 1537,
+  "t_end": 1598,
+  "periods": [
+   {"time": 1537, "label": "生誕", "impact": 5},
+   {"time": 1568, "label": "観音寺城の戦い", "impact": 1},
+   {"time": 1570, "label": "金ヶ崎の戦い", "impact": 1},
+   {"time": 1573, "label": "小谷城の戦い", "impact": 1},
+   {"time": 1577, "label": "信貴山城の戦い", "impact": 1},
+   {"time": 1582, "label": "備中高松城の戦い", "impact": 1},
+   {"time": 1583, "label": "賤ヶ岳の戦い", "impact": 1},
+   {"time": 1584, "label": "小牧・長久手の戦い", "impact": 3},
+   {"time": 1585, "label": "紀州征伐", "impact": 1},
+   {"time": 1586, "label": "九州征伐", "impact": 1},
+   {"time": 1588, "label": "刀狩令制定", "impact": 3},
+   {"time": 1590, "label": "小田原の役", "impact": 1},
+   {"time": 1598, "label": "伏見城で薨去。", "impact": 5}
+  ],
+  "color": "#00ff00",
+  "is_visible": true
+ },
+ {
+  "title": "徳川家康",
+  "t_start": 1542,
+  "t_end": 1616,
+  "periods": [
+   {"time": 1542, "label": "生誕", "impact": 5},
+   {"time": 1560, "label": "桶狭間の戦い", "impact": 1},
+   {"time": 1570, "label": "姉川の戦い", "impact": 1},
+   {"time": 1572, "label": "二俣城の戦い", "impact": 1},
+   {"time": 1572, "label": "三方ヶ原の戦い", "impact": 1},
+   {"time": 1575, "label": "長篠の戦い", "impact": 1},
+   {"time": 1582, "label": "本能寺の変", "impact": 1},
+   {"time": 1600, "label": "関ヶ原の戦い", "impact": 3},
+   {"time": 1614, "label": "大坂冬の陣", "impact": 3},
+   {"time": 1615, "label": "大坂夏の陣", "impact": 3},
+   {"time": 1616, "label": "死去", "impact": 5}
+  ],
+  "color": "#0000ff",
+  "is_visible": true
+ }
+]
+</textarea>
+  </body>
+</html>

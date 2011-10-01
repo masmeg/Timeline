@@ -1,0 +1,11 @@
+body {
+    background-color: #87cefa;
+}
+
+.timechart_main {
+    margin: 0 auto auto 0;
+    height: 400px;
+    /* margin: -115px 0 0 -310px; */
+    width: 600px;
+    background-color: #ffffff;
+}

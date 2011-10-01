@@ -1,0 +1,12 @@
+{
+    "start": 1500,
+    "end": 1650,
+    "x_interval": 6,
+    "y_interval": 50,
+    "bgcolor": "#ffffff",
+    "nodeRadius": 2.0,
+    "nodeRadiusDiff": 0.5,
+    "width": 600,
+    "height": 400,
+    "range": 50
+}
