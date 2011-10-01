@@ -14,12 +14,16 @@ function TimeChart(raphael, options, timelines) {
     var bg = null;
 
     this.drawNode = function (x1, y1, c1, info) {
-	var c, rect, txt, radius;
-	radius = Math.floor(opt.nodeRadius * info.impact);
+	var c, rect, txt, radius, impact;
+	impact = parseInt(info.impact, 10);
+	if (impact == null) {	    
+	    impact = 1;
+	}
+	radius = Math.floor(opt.nodeRadius * impact);
 	c = r.circle(x1, y1, radius);
 	txt = r.text(x1, y1 + 20, info.time + ' ' + info.label);
 
-	txt.hide();
+	txt.hide();	    
 	c.node.onmouseover = function () {
 	    c.toFront();
 	    txt.toFront();
@@ -46,6 +50,7 @@ function TimeChart(raphael, options, timelines) {
 	line1 = r.path('M' + (interval * (x1 - start)) + ' ' + y
                        + 'L' + (interval * (x2 - start)) + ' ' + y);
 	tl.push(line1);
+	/*
 	tmp_node = this.drawNode(
 	    interval * (x1 - start),
 	    y,
@@ -60,6 +65,7 @@ function TimeChart(raphael, options, timelines) {
 	    {time: x2, label: '終了'}
 	);
 	tl.push(tmp_node);
+	 */
     };
     this.drawPeriod = function (period, y, c1, c2) {
 	return this.drawNode(
@@ -108,10 +114,7 @@ function TimeChart(raphael, options, timelines) {
 	    r.text(
 		20,
 		y - 20,
-		timeline.title +
-		    ' (' + timeline.t_start
-		    + ' 〜 ' + timeline.t_end
-		    + ')'
+		timeline.title + ' (' + timeline.t_start + ' 〜 ' + timeline.t_end + ')'
 	    )
 		.attr({
 			  stroke: '#000000',
@@ -293,9 +296,9 @@ function changeRange(v) {
 function setPrev() {
     var v, v_start, v_end;
     v = 10;
-    if (tc.setMove(- v)) {
-	v_start = getNum('tc_start') + v;
-	v_end = getNum('tc_end') + v;	
+    if (tc.setMove(v)) {
+	v_start = getNum('tc_start') - v;
+	v_end = getNum('tc_end') - v;	
 	
 	setNum('tc_start', v_start);
 	setNum('tc_end', v_end);
@@ -303,11 +306,11 @@ function setPrev() {
 }
 
 function setNext() {
-    var v, v_start, v_end;
+   var v, v_start, v_end;
     v = 10;
-    if (tc.setMove(v)) {
-	v_start = getNum('tc_start') - v;
-	v_end = getNum('tc_end') - v;	
+    if (tc.setMove(- v)) {
+	v_start = getNum('tc_start') + v;
+	v_end = getNum('tc_end') + v;	
 	
 	setNum('tc_start', v_start);
 	setNum('tc_end', v_end);
