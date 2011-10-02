@@ -99,26 +99,30 @@ function Timeline(raphael, options, timelines) {
         return tl;
     };
     this.drawBackground = function () {
-        var x, backgroundline, w, h, footer_line, start, end, year, diff, line1, line2, txt, date_min, date_max, txts, i;
+        var x, backgroundline, w, h, footer_line, start, end, year, diff, line1, line2, txt, date_min, date_max, txts, i, x1, x2, base_start;
         w = opt.width;
         h = opt.height;
         footer_line = h - 40;
         backgroundline = r.set();
         txts = [];
 
-        start = opt.start;
-        end = opt.end;
+        // start = opt.start;
+        // end = opt.end;
+        start = opt.date_min;
+        end = opt.date_max;
+	base_start = opt.start;
         year = start;
-        diff = Math.floor((end - start) / 10);
+        diff = Math.floor((opt.end - opt.start) / 10);
         if (diff === 0) {
             diff = 1;
         }
 
-
-        line2 = r.path('M0 ' + footer_line + 'L' + w + ' ' + footer_line);
+        x1 = Math.floor(opt.x_interval * (start - base_start));
+        x2 = Math.floor(opt.x_interval * (end - base_start));
+        line2 = r.path('M' + x1 + ' ' + footer_line + 'L' + x2 + ' ' + footer_line);
         backgroundline.push(line2);
         for (year = start; year <= end; year += diff) {
-            x = Math.floor(opt.x_interval * (year - start));
+            x = Math.floor(opt.x_interval * (year - base_start));
             line1 = r.path('M' + x + ' 0L' + x + ' ' + footer_line);
             backgroundline.push(line1);
             txts.push(r.text(x, footer_line + 10, year)
@@ -136,9 +140,7 @@ function Timeline(raphael, options, timelines) {
         for (i = 0; i < tls_imgs.length; i += 1) {
             tls_imgs[i].translate(v, 0);
         }
-        bg.remove();
-        this.drawBackground();
-        bg.toBack();
+	bg.translate(v, 0);
     };
     this.draw = function () {
         var i, y, interval;

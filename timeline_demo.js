@@ -1,18 +1,17 @@
 var tc, r;
 
 function getNum(id) {
-    return parseInt(document.getElementById(id).value, 10);
+    return parseInt(jQuery(id).val(), 10);
 }
 
 function setNum(id, value) {
-    document.getElementById(id).value = parseInt(value, 10);
+    jQuery(id).val(parseInt(value, 10));
 }
 
 window.onload = function () {
     var w, h, timelines, opt_timeline;
 
-
-    timelines = jQuery.parseJSON(document.getElementById('timeline_data').value);
+    timelines = jQuery.parseJSON(jQuery('#timeline_data').val());
     opt_timeline = {
         "start": 1500,
         "end": 1650,
@@ -26,8 +25,8 @@ window.onload = function () {
         "date_max": 1700
     };
 
-    document.getElementById('tc_start').value = opt_timeline.start;
-    document.getElementById('tc_end').value = opt_timeline.end;
+    jQuery('#tc_start').val(opt_timeline.start);
+    jQuery('#tc_end').val(opt_timeline.end);
     w = opt_timeline.width;
     h = opt_timeline.height;
 
@@ -42,19 +41,19 @@ window.onload = function () {
 
 function setStart(v) {
     tc.setStart(v);
-    setNum('tc_range_diff', getNum('tc_end') - getNum('tc_start'));
+    setNum('#tc_range_diff', getNum('#tc_end') - getNum('#tc_start'));
 }
 
 function setEnd(v) {
     tc.setEnd(v);
-    setNum('tc_range_diff', getNum('tc_end') - getNum('tc_start'));
+    setNum('#tc_range_diff', getNum('#tc_end') - getNum('#tc_start'));
 }
 
 function changeRange(v) {
     var v_start, range;
-    v_start = getNum('tc_start');
+    v_start = getNum('#tc_start');
     range = Number(v);
-    setNum('tc_end', v_start + range);
+    setNum('#tc_end', v_start + range);
     tc.setViewArea(v_start, v_start + range);
 }
 
@@ -62,11 +61,11 @@ function setPrev() {
     var v, v_start, v_end;
     v = 10;
     if (tc.setMove(v)) {
-        v_start = getNum('tc_start') - v;
-        v_end = getNum('tc_end') - v;
+        v_start = getNum('#tc_start') - v;
+        v_end = getNum('#tc_end') - v;
 
-        setNum('tc_start', v_start);
-        setNum('tc_end', v_end);
+        setNum('#tc_start', v_start);
+        setNum('#tc_end', v_end);
     }
 }
 
@@ -74,15 +73,15 @@ function setNext() {
     var v, v_start, v_end;
     v = 10;
     if (tc.setMove(- v)) {
-        v_start = getNum('tc_start') + v;
-        v_end = getNum('tc_end') + v;
+        v_start = getNum('#tc_start') + v;
+        v_end = getNum('#tc_end') + v;
 
-        setNum('tc_start', v_start);
-        setNum('tc_end', v_end);
+        setNum('#tc_start', v_start);
+        setNum('#tc_end', v_end);
     }
 }
 
 function readJSON() {
-    var timelines = jQuery.parseJSON(document.getElementById('timeline_data').value);
+    var timelines = jQuery.parseJSON(jQuery('#timeline_data').val());
     tc.readJSON(timelines);
 }
