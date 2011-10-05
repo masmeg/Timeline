@@ -17,7 +17,15 @@
     <h1>年表ジェネレーター</h1>
     <p>図で○になっている部分にマウスを合わせると、
       何があったのか表示されます。</p>
-    <div class="timechart_main" id="tc_timechart"></div>
+    <div class="timechart">
+      <div class="timechart_main" id="tc_timechart"></div>
+      <div class="tc_slider">
+	<div class="tc_slider_front" id="slider_front">
+	  <div class="tc_slider_border tc_slider_left" id="slider_left"></div>
+	  <div class="tc_slider_border tc_slider_right" id="silder_right"></div>
+	</div>
+      </div>
+    </div>
     <label>開始日:<input id="tc_start" onBlur="setStart(this.value);"
     value="1500" type="number" /></label>
     <label>終了日:<input id="tc_end" onBlur="setEnd(this.value);"
@@ -30,7 +38,6 @@
     <button id="tc_prev" onClick="setPrev();">Prev</button>
     <button id="tc_next" onClick="setNext();">Next</button>
     <button id="tc_read" onClick="readJSON();">Read</button>
-    
     <br />
     <p>下のテキストエリアを変更して、
       Readを押すと年表の内容が変更できます。</p>

@@ -1,4 +1,4 @@
-var tc, r;
+var tc, r, opt_timeline;
 
 function getNum(id) {
     return parseInt(jQuery(id).val(), 10);
@@ -9,7 +9,7 @@ function setNum(id, value) {
 }
 
 window.onload = function () {
-    var w, h, timelines, opt_timeline;
+    var w, h, timelines;
 
     timelines = jQuery.parseJSON(jQuery('#timeline_data').val());
     opt_timeline = {
@@ -39,14 +39,31 @@ window.onload = function () {
     r.safari();
 };
 
+function setSlider() {
+    var rate, y_start, y_end, year_length;
+    year_length = opt_timeline.date_max - opt_timeline.date_min;
+    rate = opt_timeline.width / year_length;
+    y_start = tc.getStart();
+    y_end = tc.getEnd();
+    
+    $('#slider_front').width((y_end - y_start) * rate);
+    $('#slider_front').css('left', (y_start - opt_timeline.date_min) * rate);
+}
+
 function setStart(v) {
     tc.setStart(v);
-    setNum('#tc_range_diff', getNum('#tc_end') - getNum('#tc_start'));
+    if (getNum('#tc_end') - getNum('#tc_start') > 0) {
+	setNum('#tc_range_diff', getNum('#tc_end') - getNum('#tc_start'));
+	setSlider();
+    }
 }
 
 function setEnd(v) {
     tc.setEnd(v);
-    setNum('#tc_range_diff', getNum('#tc_end') - getNum('#tc_start'));
+    if (getNum('#tc_end') - getNum('#tc_start') > 0) {
+	setNum('#tc_range_diff', getNum('#tc_end') - getNum('#tc_start'));
+	setSlider();
+    }
 }
 
 function changeRange(v) {
@@ -55,30 +72,27 @@ function changeRange(v) {
     range = Number(v);
     setNum('#tc_end', v_start + range);
     tc.setViewArea(v_start, v_start + range);
+    setSlider();
 }
 
 function setPrev() {
     var v, v_start, v_end;
     v = 10;
     if (tc.setMove(v)) {
-        v_start = getNum('#tc_start') - v;
-        v_end = getNum('#tc_end') - v;
-
-        setNum('#tc_start', v_start);
-        setNum('#tc_end', v_end);
+        setNum('#tc_start', tc.getStart());
+        setNum('#tc_end', tc.getEnd());
     }
+    setSlider();
 }
 
 function setNext() {
     var v, v_start, v_end;
     v = 10;
     if (tc.setMove(- v)) {
-        v_start = getNum('#tc_start') + v;
-        v_end = getNum('#tc_end') + v;
-
-        setNum('#tc_start', v_start);
-        setNum('#tc_end', v_end);
+        setNum('#tc_start', tc.getStart());
+        setNum('#tc_end', tc.getEnd());
     }
+    setSlider();
 }
 
 function readJSON() {

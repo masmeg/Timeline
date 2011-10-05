@@ -182,6 +182,7 @@ function Timeline(raphael, options, timelines) {
             opt.start = opt.start - moveDate;
             opt.end = opt.end - moveDate;
             this.drawMove(opt.x_interval * moveDate);
+	    return true;
         }
         return false;
     };
@@ -201,6 +202,12 @@ function Timeline(raphael, options, timelines) {
     };
     this.setEnd = function (v) {
         this.setViewArea(opt.start, v);
+    };
+    this.getStart = function() {
+	return opt.start;
+    };
+    this.getEnd = function() {
+	return opt.end;
     };
     this.readJSON = function (v) {
         tls = v;
