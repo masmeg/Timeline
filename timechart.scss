@@ -1,0 +1,46 @@
+$color1: #ffffff;
+$color2: #ffeeee;
+$color3: #eeee00;
+$color4: #ff0000;
+
+$tc_width: 600px;
+$tc_height1: 400px;
+$tc_height2: 20px;
+
+@mixin tc($width: $tc_width, $height: $tc_height2) {
+    padding: 0px;
+    border: 0px;
+    width: $width;
+    height: $height;
+}
+@mixin absolute_side($side) {
+    position: absolute;    
+    #{$side}: 0px;
+}
+
+.timechart { position: relative; }
+.timechart_main {
+    margin: 0px auto auto 0px;
+    height: $tc_height1;
+    width: $tc_width;
+    background-color: $color1;
+    position: relative;
+}
+.tc_slider {
+    margin: 5px auto auto 0px;
+    @include tc();
+    background-color: $color2;
+    position: relative;
+}
+.tc_slider_front {
+    @include tc();
+    @include absolute_side(top);
+    background-color: $color3;
+}
+.tc_slider_border {
+    @include tc(2px, 20px);
+    @include absolute_side(top);
+    background-color: $color4;
+}
+.tc_slider_left { @include absolute_side(left); }
+.tc_slider_right { @include absolute_side(right); }
